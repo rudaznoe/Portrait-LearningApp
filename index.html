@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📖 Module Portrait Français - 10H VG1</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --info: #0ea5e9;
+            --bg: #0f172a;
+            --bg-soft: #111827;
+            --bg-card: #020617;
+            --bg-card-soft: #020617;
+            --border-subtle: rgba(148, 163, 184, 0.12);
+            --text: #e5e7eb;
+            --text-muted: #9ca3af;
+            --accent: #a855f7;
+            --accent-soft: rgba(168, 85, 247, 0.15);
+            --radius-lg: 18px;
+            --radius-md: 12px;
+            --radius-pill: 999px;
+            --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.65);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #1e293b 0, #020617 52%, #000 100%);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            padding: 18px;
+        }
+
+        ::-webkit-scrollbar { width: 7px; height: 7px; }
+        ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.9); }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #4f46e5, #a855f7);
+            border-radius: 999px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.9s ease;
+        }
+        .login-box {
+            background: radial-gradient(circle at top, rgba(99, 102, 241, 0.16), rgba(15, 23, 42, 0.96));
+            border-radius: 24px;
+            padding: 28px 26px 24px;
+            box-shadow: 0 24px 70px rgba(15, 23, 42, 0.9), 0 0 0 1px rgba(148, 163, 184, 0.28);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            backdrop-filter: blur(26px);
+        }
+        .login-box h1 { margin: 0 0 4px; font-size: 1.7rem; }
+        .login-box p { margin: 0 0 18px; color: var(--text-muted); font-size: 0.96rem; }
+
+        .form-group { margin-bottom: 18px; }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.92rem;
+            color: var(--text-muted);
+        }
+
+        #codeInput {
+            width: 100%;
+            padding: 11px 13px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            background: rgba(15, 23, 42, 0.95);
+            color: var(--text);
+            font-size: 0.98rem;
+            outline: none;
+            transition: border 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+        }
+        #codeInput:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.6);
+            background: rgba(15, 23, 42, 1);
+        }
+
+        .login-buttons { display: flex; gap: 10px; margin-top: 12px; }
+
+        .btn-login {
+            flex: 1;
+            border-radius: 999px;
+            border: none;
+            padding: 11px 0;
+            font-size: 0.98rem;
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, filter 0.15s ease;
+        }
+        .btn-login.prof {
+            background: linear-gradient(135deg, #4f46e5, #a855f7);
+            color: #f9fafb;
+            box-shadow: 0 14px 30px rgba(79, 70, 229, 0.45);
+        }
+        .btn-login.student {
+            background: linear-gradient(135deg, #22c55e, #0ea5e9);
+            color: #f9fafb;
+            box-shadow: 0 14px 30px rgba(16, 185, 129, 0.45);
+        }
+        .btn-login:hover { transform: translateY(-1px); filter: brightness(1.05); }
+        .btn-login:active {
+            transform: translateY(1px) scale(0.99);
+            filter: brightness(0.97);
+            box-shadow: none;
+        }
+
+        .login-hint {
+            margin-top: 16px;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            background: rgba(15, 23, 42, 0.75);
+            border-radius: 14px;
+            padding: 10px 12px;
+            border: 1px dashed rgba(148, 163, 184, 0.5);
+        }
+        .login-hint code {
+            background: rgba(15, 23, 42, 0.9);
+            padding: 2px 7px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+        }
+
+        .app-container {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            max-width: 1100px;
+            height: 98vh;
+            background: radial-gradient(circle at top left, rgba(99, 102, 241, 0.1), rgba(15, 23, 42, 0.98));
+            border-radius: 26px;
+            padding: 18px 16px 16px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            backdrop-filter: blur(30px);
+        }
+        .app-container.active { display: flex; }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 6px 10px 10px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+        }
+        .header h1 { margin: 0; font-size: 1.4rem; }
+
+        .header-info { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; }
+
+        #userInfo {
+            padding: 5px 11px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        .logout-btn {
+            border-radius: 999px;
+            border: 1px solid rgba(239, 68, 68, 0.65);
+            background: rgba(127, 29, 29, 0.8);
+            color: #fecaca;
+            padding: 5px 11px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+        }
+        .logout-btn:hover {
+            background: rgba(248, 113, 113, 0.9);
+            color: #111827;
+            transform: translateY(-0.5px);
+            box-shadow: 0 10px 24px rgba(248, 113, 113, 0.4);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+            padding: 4px 4px 4px 6px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.75);
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            border-radius: 999px;
+            border: none;
+            padding: 7px 13px;
+            font-size: 0.88rem;
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+        }
+        .nav-tab:hover {
+            background: rgba(30, 64, 175, 0.55);
+            color: #e5e7eb;
+            transform: translateY(-0.5px);
+        }
+        .nav-tab.active {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.95), rgba(168, 85, 247, 0.95));
+            color: white;
+            box-shadow: 0 9px 24px rgba(79, 70, 229, 0.65);
+        }
+
+        .content-wrapper { flex: 1; overflow-y: auto; padding: 8px 2px 4px; }
+        #contentArea { padding: 2px; }
+
+        .card {
+            background: radial-gradient(circle at top left, rgba(148, 163, 184, 0.08), rgba(15, 23, 42, 0.98));
+            border-radius: var(--radius-lg);
+            padding: 16px 16px 14px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.7);
+        }
+        .card h2 { margin-top: 0; margin-bottom: 10px; font-size: 1.1rem; }
+        .card h3 { margin-top: 10px; margin-bottom: 6px; font-size: 1rem; }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 7px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin: 1px 4px 1px 0;
+        }
+
+        .btn {
+            border-radius: 999px;
+            border: none;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease, background 0.12s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #4f46e5, #818cf8);
+            color: white;
+            box-shadow: 0 12px 28px rgba(79, 70, 229, 0.55);
+        }
+        .btn-outline {
+            background: rgba(15, 23, 42, 0.9);
+            color: var(--text-muted);
+            border: 1px solid rgba(148, 163, 184, 0.55);
+        }
+        .btn:hover { transform: translateY(-1px); filter: brightness(1.03); }
+        .btn:active { transform: translateY(1px) scale(0.99); box-shadow: none; }
+
+        .notice {
+            padding: 8px 11px;
+            border-radius: 12px;
+            font-size: 0.84rem;
+            background: rgba(30, 64, 175, 0.18);
+            border: 1px solid rgba(129, 140, 248, 0.6);
+            color: #c7d2fe;
+            margin-top: 6px;
+        }
+        .notice.danger {
+            background: rgba(127, 29, 29, 0.5);
+            border-color: rgba(248, 113, 113, 0.8);
+            color: #fecaca;
+        }
+        .notice.success {
+            background: rgba(22, 101, 52, 0.55);
+            border-color: rgba(52, 211, 153, 0.8);
+            color: #bbf7d0;
+        }
+
+        .session-step {
+            padding: 6px 8px;
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            margin-bottom: 6px;
+        }
+        .session-tags { margin-top: 4px; }
+
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .character-card {
+            border-radius: 16px;
+            background: rgba(15, 23, 42, 0.98);
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            padding: 8px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 0.85rem;
+            transition: transform 0.12s ease, box-shadow 0.12s ease, border 0.12s ease, background 0.12s ease;
+        }
+        .character-card img {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 6px;
+        }
+        .character-card.selected {
+            border-color: #22c55e;
+            background: rgba(22, 101, 52, 0.65);
+            box-shadow: 0 10px 26px rgba(22, 163, 74, 0.55);
+        }
+
+        .vocab-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+        .vocab-filter {
+            padding: 4px 9px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            background: rgba(15, 23, 42, 0.9);
+            font-size: 0.8rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+        .vocab-filter.active {
+            background: linear-gradient(135deg, #4f46e5, #a855f7);
+            color: #f9fafb;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.55);
+        }
+
+        .vocab-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 6px;
+            margin-top: 6px;
+        }
+        .vocab-item {
+            padding: 5px 7px;
+            border-radius: 10px;
+            background: rgba(15, 23, 42, 0.98);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .vocab-item span.type { font-size: 0.7rem; color: var(--text-muted); }
+
+        .generator-input {
+            width: 100%;
+            min-height: 90px;
+            border-radius: 14px;
+            border: 1px solid rgba(148, 163, 184, 0.55);
+            background: rgba(15, 23, 42, 0.96);
+            color: var(--text);
+            padding: 8px 10px;
+            resize: vertical;
+            font-size: 0.9rem;
+        }
+        .generator-output {
+            white-space: pre-wrap;
+            background: rgba(15, 23, 42, 0.93);
+            border-radius: 14px;
+            padding: 8px 10px;
+            border: 1px dashed rgba(148, 163, 184, 0.6);
+            font-size: 0.88rem;
+            margin-top: 6px;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .app-container { height: 100vh; border-radius: 18px; padding: 12px 10px; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .characters-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+/* DEBUT BLOC 2 – STYLES QUIZ */
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.quiz-option {
+    border-radius: 12px;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    padding: 8px 10px;
+    background: rgba(15, 23, 42, 0.95);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: border 0.15s ease, background 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
+}
+
+.quiz-option:hover {
+    border-color: #818cf8;
+    background: rgba(30, 64, 175, 0.85);
+    box-shadow: 0 8px 18px rgba(79, 70, 229, 0.5);
+    transform: translateY(-0.5px);
+}
+
+.quiz-option.selected {
+    border-color: #22c55e;
+    background: rgba(22, 163, 74, 0.25);
+    box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.8);
+}
+
+.quiz-option.correct {
+    border-color: #22c55e;
+    background: rgba(22, 163, 74, 0.15);
+}
+
+.quiz-option .small {
+    font-size: 0.78rem;
+    color: #9ca3af;
+}
+
+.quiz-progress {
+    width: 100%;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.quiz-progress-bar {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #4f46e5, #a855f7);
+    transition: width 0.25s ease;
+}
+
+.mini-title {
+    font-size: 0.85rem;
+    color: #9ca3af;
+    margin-bottom: 4px;
+}
+
+/* FIN BLOC 2 – STYLES QUIZ */
+
+    </style>
+</head>
+<body>
+
+<div class="login-container" id="loginScreen">
+    <div class="login-box">
+        <h1>📖 Portrait Français</h1>
+        <p>Module 10H VG1 - 8 semaines</p>
+        
+        <div class="form-group">
+            <label for="codeInput">Entrez votre code d'accès</label>
+            <input type="password" id="codeInput" placeholder="ex. frvg2026" />
+        </div>
+
+        <div class="login-buttons">
+            <button class="btn-login prof" onclick="loginAsProf()">👨‍🏫 Enseignant</button>
+            <button class="btn-login student" onclick="loginAsStudent()">📚 Élève</button>
+        </div>
+
+        <div class="login-hint">
+            <strong>Codes d'accès :</strong><br/>
+            Enseignant : <code>demander à RUD</code><br/>
+            Élève : <code>vaud2026</code>
+        </div>
+    </div>
+</div>
+
+<div class="app-container" id="appContainer">
+    <div class="header">
+        <h1 id="appTitle">📖 Module Portrait Français</h1>
+        <div class="header-info">
+            <span id="userInfo"></span>
+            <button class="logout-btn" onclick="logout()">Déconnexion</button>
+        </div>
+    </div>
+
+    <div class="nav-tabs" id="navTabs"></div>
+
+    <div class="content-wrapper">
+        <div id="contentArea"></div>
+    </div>
+</div>
+
+<script>
+
+const appState = {
+    user: null,
+    currentTab: null,
+    quizIndex: 0,
+    quizScore: 0,
+    quizAnswers: [],
+    game: {
+        characters: [],
+        target: null,
+        selected: null,
+        attempts: 0,
+        over: false
+    }
+};
+
+/* LOGIN */
+function loginAsProf() {
+    const code = document.getElementById('codeInput').value;
+    if (code === 'prof2026') {
+        appState.user = 'prof';
+        initializeApp();
+    } else {
+        alert('❌ Code incorrect');
+    }
+}
+
+function loginAsStudent() {
+    const code = document.getElementById('codeInput').value;
+    if (code === 'vaud2026') {
+        appState.user = 'student';
+        initializeApp();
+    } else {
+        alert('❌ Code incorrect');
+    }
+}
+
+/* INIT APP */
+function initializeApp() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('appContainer').classList.add('active');
+
+    document.getElementById('userInfo').textContent =
+        appState.user === 'prof' ? '👨‍🏫 Vue Enseignant' : '📚 Vue Élève';
+
+    renderNavigation();
+    if (appState.user === 'prof') {
+        openTab('accueil');
+    } else {
+        openTab('parcours');
+    }
+}
+
+/* NAVIGATION */
+function renderNavigation() {
+    const navTabs = document.getElementById('navTabs');
+    navTabs.innerHTML = '';
+
+    const tabs = appState.user === 'prof'
+        ? ['accueil', 'sessions', 'quiz', 'generateur', 'qui-est-ce', 'ressources', 'vocabulaire']
+        : ['parcours', 'quiz', 'generateur', 'qui-est-ce', 'vocabulaire'];
+
+    const labels = {
+        'accueil': '🏠 Accueil',
+        'parcours': '🎯 Parcours',
+        'sessions': '📖 Sessions',
+        'quiz': '❓ Quiz',
+        'generateur': '🎨 Générateur',
+        'qui-est-ce': '🎭 Qui est-ce ?',
+        'ressources': '📚 Ressources',
+        'vocabulaire': '💬 Vocabulaire'
+    };
+
+    tabs.forEach(tab => {
+        const button = document.createElement('button');
+        button.className = 'nav-tab';
+        button.textContent = labels[tab];
+        button.onclick = () => {
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            button.classList.add('active');
+            openTab(tab);
+        };
+        navTabs.appendChild(button);
+    });
+}
+
+function openTab(tabName) {
+    appState.currentTab = tabName;
+    const content = document.getElementById('contentArea');
+    content.innerHTML = renderTabContent(tabName);
+    document.querySelector('.content-wrapper').scrollTop = 0;
+}
+
+function renderTabContent(tabName) {
+    if (appState.user === 'prof') {
+        switch (tabName) {
+            case 'accueil': return renderAccueilProf();
+            case 'sessions': return renderSessionsProf();
+            case 'quiz': return renderQuizTab();
+            case 'generateur': return renderGenerateurTab();
+            case 'qui-est-ce': return renderQuiEstCeTab();
+            case 'ressources': return renderRessourcesProf();
+            case 'vocabulaire': return renderVocabulaireTab();
+            default: return '<div class="card"><p>Onglet inconnu.</p></div>';
+        }
+    } else {
+        switch (tabName) {
+            case 'parcours': return renderParcours();
+            case 'quiz': return renderQuizTab();
+            case 'generateur': return renderGenerateurTab();
+            case 'qui-est-ce': return renderQuiEstCeTab();
+            case 'vocabulaire': return renderVocabulaireTab();
+            default: return '<div class="card"><p>Onglet inconnu.</p></div>';
+        }
+    }
+}
+
+/* ACCUEIL PROF */
+function renderAccueilProf() {
+    return `
+        <div class="card">
+            <h2>🏠 Accueil Enseignant</h2>
+            <p>Ce module permet d'installer un lexique riche, de retravailler la phrase complète et l'imparfait,
+               puis de produire un portrait final évalué. Pensé pour 10H VG1.</p>
+            <div class="grid-2" style="margin-top:8px;">
+                <div>
+                    <h3>🎯 Objectifs principaux</h3>
+                    <ul>
+                        <li>Décrire physiquement et moralement une personne.</li>
+                        <li>Réutiliser l'imparfait (description, habitudes).</li>
+                        <li>Structurer des phrases complètes et variées.</li>
+                        <li>Préparer une production finale évaluée.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>🧭 Parcours</h3>
+                    <ul>
+                        <li>Sessions guidées avec fiches papier.</li>
+                        <li>Quiz vocabulaire avec feedback immédiat.</li>
+                        <li>Générateur de portrait et test blanc.</li>
+                        <li>Jeu « Qui est-ce ? » pour l’oral.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+/* PARCOURS ÉLÈVE */
+function renderParcours() {
+    return `
+        <div class="card">
+            <h2>🎯 Parcours de module</h2>
+            <p>Voici les grandes étapes du module "Portrait". Tu peux cocher mentalement où tu en es et télécharger les fiches utiles.</p>
+            <div class="grid-2" style="margin-top:8px;">
+                <div>
+                    <h3>🔹 Phase 1 : Découvrir</h3>
+                    <ul>
+                        <li>Lexique du portrait (physique + caractère).</li>
+                        <li>Observation de portraits modèles.</li>
+                        <li>Rappel de l'imparfait pour la description.</li>
+                    </ul>
+                    <div style="margin-top:6px;">
+                        <button class="btn btn-outline" onclick="window.open('docs/fiche1-physique-moral.pdf','_blank')">📥 Fiche 1 Physique / Moral</button>
+                        <button class="btn btn-outline" onclick="window.open('docs/fiche5-lexique.pdf','_blank')">📥 Fiche 5 Lexique</button>
+                    </div>
+                    <div style="margin-top:6px;">
+                        <button class="btn btn-outline" onclick="window.open('img/portrait1.png','_blank')">🖼️ Portrait 1</button>
+                        <button class="btn btn-outline" onclick="window.open('img/portrait2.png','_blank')">🖼️ Portrait 2</button>
+                        <button class="btn btn-outline" onclick="window.open('img/portrait3.png','_blank')">🖼️ Portrait 3</button>
+                    </div>
+
+                    <h3 style="margin-top:12px;">🔹 Phase 2 : S'entraîner</h3>
+                    <ul>
+                        <li>Activités orales et écrites guidées.</li>
+                        <li>Jeux et petits portraits intermédiaires.</li>
+                        <li>Quiz vocabulaire pour vérifier tes acquis.</li>
+                    </ul>
+                    <div style="margin-top:6px;">
+                        <button class="btn btn-outline" onclick="window.open('docs/fiche2-imparfait.pdf','_blank')">📥 Fiche 2 Imparfait</button>
+                        <button class="btn btn-outline" onclick="window.open('docs/fiche4-imparfait-pc.pdf','_blank')">📥 Fiche 4 Imparfait / PC</button>
+                    </div>
+                </div>
+                <div>
+                    <h3>🔹 Phase 3 : Produire</h3>
+                    <ul>
+                        <li>Lecture de portraits littéraires et contemporains.</li>
+                        <li>Fiche « phrase complète » et techniques de portrait.</li>
+                        <li>Générateur de portrait pour préparer tes idées.</li>
+                    </ul>
+                    <div style="margin-top:6px;">
+                        <button class="btn btn-outline" onclick="window.open('docs/fiche8-lecture-portraits.pdf','_blank')">📥 Fiche 8 Lecture de portraits</button>
+                        <button class="btn btn-outline" onclick="window.open('docs/fiche3-phrase-complete.pdf','_blank')">📥 Fiche 3 Phrase complète</button>
+                        <button class="btn btn-outline" onclick="window.open('docs/fiche6-techniques.pdf','_blank')">📥 Fiche 6 Techniques de portrait</button>
+                    </div>
+
+                    <h3 style="margin-top:12px;">🔹 Phase 4 : Évaluer</h3>
+                    <ul>
+                        <li>Rédaction du portrait final.</li>
+                        <li>Test blanc pour t’entraîner.</li>
+                        <li>Grille critériée pour voir tes forces.</li>
+                    </ul>
+                    <div style="margin-top:6px;">
+                        <button class="btn btn-outline" onclick="window.open('docs/fiche7-grille-portrait.pdf','_blank')">📥 Fiche 7 Grille critériée</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+/* SESSIONS PROF – plan enrichi + fiches 3 et 6 */
+/* SESSIONS PROF – plan enrichi + fiche6-techniques + fiche 7 + fiche de lecture */
+function renderSessionsProf() {
+    return `
+        <div class="card">
+            <h2>📖 Plan détaillé des 4 sessions</h2>
+            <p>Les activités combinent lecture, écriture, jeux, grammaire et vocabulaire. Les fiches sont intégrées au bon moment.</p>
+
+            <h3>🧩 Session 1 – Découvrir le portrait</h3>
+            <div class="session-step">
+                <strong>1. Accroche visuelle :</strong> affichage progressif des trois portraits.
+                <div class="session-tags">
+                    <span class="tag">Oral</span>
+                    <span class="tag">Interaction</span>
+                    <span class="tag">5-10 min</span>
+                </div>
+                <p>Faire décrire spontanément ce que les élèves voient (physique, émotions, contexte possible).</p>
+                <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;">
+                    <button class="btn btn-outline" onclick="togglePortrait('portrait1Container')">Portrait 1</button>
+                    <button class="btn btn-outline" onclick="togglePortrait('portrait2Container')">Portrait 2</button>
+                    <button class="btn btn-outline" onclick="togglePortrait('portrait3Container')">Portrait 3</button>
+                </div>
+                <div id="portrait1Container" style="display:none;margin-top:6px;">
+                    <img src="img/portrait1.png" alt="Portrait 1" style="max-width:100%;border-radius:12px;" />
+                </div>
+                <div id="portrait2Container" style="display:none;margin-top:6px;">
+                    <img src="img/portrait2.png" alt="Portrait 2" style="max-width:100%;border-radius:12px;" />
+                </div>
+                <div id="portrait3Container" style="display:none;margin-top:6px;">
+                    <img src="img/portrait3.png" alt="Portrait 3" style="max-width:100%;border-radius:12px;" />
+                </div>
+            </div>
+            <div class="session-step">
+                <strong>2. Tri Physique / Moral :</strong> activité avec la <em>Fiche 1</em>.
+                <div class="session-tags">
+                    <span class="tag">Lexique</span>
+                    <span class="tag">Manipulation</span>
+                </div>
+                <p>Les élèves placent chaque adjectif dans la bonne colonne, puis discutent des cas ambigus (ex: souriant).</p>
+                <a class="btn btn-primary btn-small" href="docs/fiche1-physique-moral.pdf" target="_blank" style="margin-top:4px;">📥 Fiche 1 Physique / Moral</a>
+            </div>
+            <div class="session-step">
+                <strong>3. Banque de mots :</strong> construction d'un lexique personnel à partir de la <em>Fiche 5</em>.
+                <div class="session-tags">
+                    <span class="tag">Lexique</span>
+                    <span class="tag">Cahier</span>
+                </div>
+                <p>Chaque élève choisit et recopie des adjectifs utiles (physique + moral) pour les réutiliser ensuite.</p>
+                <a class="btn btn-primary btn-small" href="docs/fiche5-lexique.pdf" target="_blank" style="margin-top:4px;">📥 Fiche 5 Lexique</a>
+            </div>
+
+            <h3>🧩 Session 2 – L’imparfait pour décrire</h3>
+            <div class="session-step">
+                <strong>1. Rappel / découverte :</strong> travail guidé sur l’imparfait avec la <em>Fiche 2</em>.
+                <div class="session-tags">
+                    <span class="tag">Grammaire</span>
+                    <span class="tag">Explicite</span>
+                </div>
+                <p>Comparer présent / imparfait, insister sur la valeur descriptive et habituelle.</p>
+                <a class="btn btn-primary btn-small" href="docs/fiche2-imparfait.pdf" target="_blank" style="margin-top:4px;">📥 Fiche 2 Imparfait</a>
+            </div>
+            <div class="session-step">
+                <strong>2. Exercices appliqués :</strong> compléter ou transformer des phrases au portrait.
+                <p>Les phrases sont choisies pour décrire des personnes proches de l’univers des élèves.</p>
+            </div>
+            <div class="session-step">
+                <strong>3. Imparfait vs passé composé :</strong> activité de tri avec la <em>Fiche 4</em>.
+                <div class="session-tags">
+                    <span class="tag">Grammaire</span>
+                    <span class="tag">Différenciation</span>
+                </div>
+                <p>Identifier ce qui « décrit » (imparfait) et ce qui « fait avancer l’histoire » (passé composé).</p>
+                <a class="btn btn-primary btn-small" href="docs/fiche4-imparfait-pc.pdf" target="_blank" style="margin-top:4px;">📥 Fiche 4 Imparfait vs PC</a>
+            </div>
+
+            <h3>🧩 Session 3 – Lire des portraits & préparer le sien</h3>
+            <div class="session-step">
+                <strong>1. Portraits littéraires et contemporains :</strong> lecture de courts extraits.
+                <div class="session-tags">
+                    <span class="tag">Lecture</span>
+                    <span class="tag">Littérature</span>
+                </div>
+                <p>Alterner un portrait littéraire (classique) et un portrait contemporain (jeunesse, BD, texte actuel).</p>
+                <p>Faire repérer : phrases à l’imparfait, vocabulaire du portrait, structure (introduction / description / conclusion).</p>
+                <a class="btn btn-primary btn-small" href="docs/fiche8-lecture-portraits.pdf" target="_blank" style="margin-top:4px;">📥 Fiche 8 Lecture de portraits</a>
+            </div>
+            <div class="session-step">
+                <strong>2. Fiche 3 – Phrase complète :</strong> travail sur sujet / verbe / compléments.
+                <div class="session-tags">
+                    <span class="tag">Grammaire</span>
+                    <span class="tag">Synthèse</span>
+                </div>
+                <p>Les élèves corrigent des phrases incomplètes et réécrivent des phrases mieux structurées.</p>
+                <a class="btn btn-primary btn-small" href="docs/fiche3-phrase-complete.pdf" target="_blank" style="margin-top:4px;">📥 Fiche 3 Phrase complète</a>
+            </div>
+            <div class="session-step">
+                <strong>3. Fiche 6 – Techniques de portrait :</strong> utiliser <em>fiche6-techniques</em> pour donner des outils d’écriture.
+                <div class="session-tags">
+                    <span class="tag">Techniques d’écriture</span>
+                    <span class="tag">Outils</span>
+                </div>
+                <p>Travailler quelques techniques : zoom sur un détail, comparaison, portrait en mouvement, contraste physique/moral.</p>
+                <a class="btn btn-primary btn-small" href="docs/fiche6-techniques.pdf" target="_blank" style="margin-top:4px;">📥 Fiche 6 Techniques de portrait</a>
+            </div>
+            <div class="session-step">
+                <strong>4. Générateur de portrait :</strong> passage à l’onglet « Générateur ».
+                <p>Production d’un premier brouillon numérique avec feedback automatique (lexique, imparfait, longueur).</p>
+            </div>
+
+            <h3>🧩 Session 4 – Test blanc & entraînement</h3>
+            <div class="session-step">
+                <strong>1. Test blanc :</strong> situation d’écriture intégrée dans l’application (onglet Générateur).
+                <div class="session-tags">
+                    <span class="tag">Écriture</span>
+                    <span class="tag">Évaluation formative</span>
+                </div>
+                <p>Les élèves écrivent un portrait à partir d’une consigne générée aléatoirement dans la zone de « Test blanc ».</p>
+            </div>
+            <div class="session-step">
+                <strong>2. Grille critériée :</strong> utilisation de la <em>Fiche 7</em> (grille d’évaluation) pour l’auto-évaluation.
+                <p>Les critères portent sur : lexique, grammaire, conjugaison, orthographe, organisation du texte (séparation en paragraphes logiques).</p>
+                <a class="btn btn-primary btn-small" href="docs/fiche7-grille-portrait.pdf" target="_blank" style="margin-top:4px;">📥 Fiche 7 Grille critériée</a>
+            </div>
+            <div class="session-step">
+                <strong>3. Feedback numérique :</strong> utilisation de l’espace « Test blanc » dans l’onglet Générateur pour donner un retour écrit personnalisé.
+                <p>Vous pouvez projeter un exemple anonymisé et commenter ensemble les points forts / points à améliorer.</p>
+            </div>
+        </div>
+    `;
+}
+
+/* QUIZ */
+function getQuizQuestions() {
+    return [
+        {question:"Quel adjectif décrit le mieux quelqu’un qui aide tout le monde ?",options:["égoïste","généreux","méchant","paresseux"],correct:1,explanation:"Quelqu'un qui aide les autres est généreux."},
+        {question:"Quel adjectif correspond au contraire de « timide » ?",options:["discret","nerveux","sociable","fatigué"],correct:2,explanation:"Le contraire de timide est sociable, à l'aise avec les autres."},
+        {question:"Quel adjectif décrit une personne qui aime beaucoup rigoler ?",options:["sérieuse","joyeuse","triste","fâchée"],correct:1,explanation:"Une personne joyeuse aime rire et sourire."},
+        {question:"Quel adjectif décrit bien une personne qui dit toujours la vérité ?",options:["courageuse","polie","honnête","égoïste"],correct:2,explanation:"Dire la vérité, c’est être honnête."},
+        {question:"Quel adjectif décrit le mieux quelqu’un qui travaille beaucoup ?",options:["paresseux","travailleur","jaloux","gourmand"],correct:1,explanation:"Un travailleur fait beaucoup d'efforts, contrairement à un paresseux."},
+        {question:"Quel adjectif convient pour décrire une personne qui a peur de tout ?",options:["courageuse","craintive","sportive","sûre d'elle"],correct:1,explanation:"Quelqu'un de craintif a souvent peur."},
+        {question:"Comment appelle-t-on une personne qui garde tout pour elle ?",options:["généreuse","sympathique","égoïste","timide"],correct:2,explanation:"Égoïste : qui pense surtout à soi."},
+        {question:"Quel adjectif décrit une personne qui n’aime pas attendre ?",options:["patient","impatient","gentil","sage"],correct:1,explanation:"Qui n’aime pas attendre est impatient."},
+        {question:"Quel adjectif décrit quelqu’un qui fait souvent des bêtises ?",options:["sage","calme","gentil","turbulent"],correct:3,explanation:"Un élève turbulent dérange souvent la classe."},
+        {question:"Quel adjectif convient pour « qui aime commander les autres » ?",options:["autoritaire","timide","généreux","sensible"],correct:0,explanation:"Autoritaire : qui aime imposer ses idées."},
+        {question:"Quel adjectif décrit le contraire de « désordonné » ?",options:["organisé","timide","jaloux","rêveur"],correct:0,explanation:"Le contraire de désordonné est organisé."},
+        {question:"Quel adjectif décrit une personne qui rougit facilement ?",options:["nerveuse","jalouse","sensible","rêveuse"],correct:2,explanation:"Sensible : qui réagit facilement, par exemple en rougissant."},
+        {question:"Quel adjectif décrit quelqu’un qui a souvent de bonnes idées ?",options:["créatif","paresseux","impatient","méchant"],correct:0,explanation:"Créatif : qui a de l’imagination."},
+        {question:"Quel adjectif correspond à « qui parle beaucoup » ?",options:["bavard","timide","généreux","craintif"],correct:0,explanation:"Bavard : qui aime beaucoup parler."},
+        {question:"Quel adjectif décrit une personne qui respecte les règles ?",options:["indisciplinée","sage","jalouse","autoritaire"],correct:1,explanation:"Sage : calme, obéissant, qui respecte les règles."}
+    ];
+}
+
+/* DEBUT BLOC 2 – LOGIQUE QUIZ */
+
+function renderQuizTab() {
+    const questions = getQuizQuestions();
+    const current = questions[appState.quizIndex] || questions[0];
+    const total = questions.length;
+    const progress = ((appState.quizIndex) / total) * 100;
+
+    let optionsHtml = '';
+    current.options.forEach((opt, idx) => {
+        optionsHtml += `
+            <div class="quiz-option" onclick="selectQuizAnswer(${idx})">
+                <span>${opt}</span>
+                <span class="small">Choisir</span>
+            </div>
+        `;
+    });
+
+    return `
+        <div class="card">
+            <h2>❓ Quiz Vocabulaire du Portrait</h2>
+            <div class="quiz-progress">
+                <div class="quiz-progress-bar" style="width:${progress}%"></div>
+            </div>
+            <p class="mini-title">Question ${appState.quizIndex + 1} / ${total}</p>
+            <div class="quiz-question">${current.question}</div>
+            <div class="quiz-options">
+                ${optionsHtml}
+            </div>
+            <div class="notice">
+                Clique sur la bonne réponse. Le quiz corrige et enregistre ton score automatiquement.
+            </div>
+        </div>
+    `;
+}
+
+function selectQuizAnswer(index) {
+    const contentArea = document.getElementById('contentArea');
+    if (!contentArea) return;
+
+    const questions = getQuizQuestions();
+    const current = questions[appState.quizIndex];
+    const isCorrect = index === current.correct;
+
+    // Marquer visuellement l'option sélectionnée
+    const optionNodes = contentArea.querySelectorAll('.quiz-option');
+    optionNodes.forEach((node, i) => {
+        node.classList.remove('selected');
+        if (i === index) {
+            node.classList.add('selected');
+        }
+    });
+
+    appState.quizAnswers.push({ index: appState.quizIndex, selected: index, correct: isCorrect });
+    if (isCorrect) appState.quizScore++;
+
+    // Afficher le feedback détaillé (avec surlignage de la bonne réponse)
+    renderQuizFeedback(isCorrect, current);
+}
+
+function renderQuizFeedback(isCorrect, question) {
+    const total = getQuizQuestions().length;
+    const progress = ((appState.quizIndex + 1) / total) * 100;
+
+    const resultText = isCorrect
+        ? `<div class="notice success">✅ Bravo ! ${question.explanation}</div>`
+        : `<div class="notice danger">❌ Ce n'est pas la bonne réponse. ${question.explanation}</div>`;
+
+    const optionsHtml = question.options
+        .map((opt, idx) => {
+            let className = 'quiz-option';
+            if (idx === question.correct) className += ' correct';
+            return `<div class="${className}"><span>${opt}</span></div>`;
+        })
+        .join('');
+
+    const content = `
+        <div class="card">
+            <h2>❓ Quiz Vocabulaire du Portrait</h2>
+            <div class="quiz-progress">
+                <div class="quiz-progress-bar" style="width:${progress}%"></div>
+            </div>
+            <p class="mini-title">Question ${appState.quizIndex + 1} / ${total}</p>
+            <div class="quiz-question">${question.question}</div>
+            <div class="quiz-options">${optionsHtml}</div>
+            ${resultText}
+            <div style="margin-top:10px;display:flex;gap:8px;">
+                ${appState.quizIndex < total - 1
+                    ? `<button class="btn btn-primary" onclick="nextQuizQuestion()">Question suivante</button>`
+                    : `<button class="btn btn-primary" onclick="resetQuiz()">Refaire le quiz</button>`
+                }
+            </div>
+        </div>
+    `;
+    document.getElementById('contentArea').innerHTML = content;
+}
+
+function nextQuizQuestion() {
+    const questions = getQuizQuestions();
+    if (appState.quizIndex < questions.length - 1) {
+        appState.quizIndex++;
+        openTab('quiz');
+    }
+}
+
+function resetQuiz() {
+    appState.quizIndex = 0;
+    appState.quizScore = 0;
+    appState.quizAnswers = [];
+    openTab('quiz');
+}
+/* FIN BLOC 2 – LOGIQUE QUIZ */
+
+
+/* GÉNÉRATEUR + TEST BLANC + GRILLE */
+
+function renderGenerateurTab() {
+    return `
+        <div class="card">
+            <h2>🎨 Générateur de portrait</h2>
+            <p>Écris un portrait dans la première zone. Le générateur te donne un retour sur :</p>
+            <ul>
+                <li>le lexique (physique / moral),</li>
+                <li>l’utilisation de l’imparfait,</li>
+                <li>la longueur et la structure de ton texte.</li>
+            </ul>
+            <textarea id="portraitInput" class="generator-input" placeholder="Écris ici ton portrait..."></textarea>
+            <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+                <button class="btn btn-primary" onclick="generatePortrait()">Analyser mon portrait</button>
+                <button class="btn btn-outline" onclick="correctPortrait()">Suggestions de correction</button>
+            </div>
+            <div id="portraitOutput" class="generator-output" style="display:none;"></div>
+        </div>
+
+        <div class="card">
+            <h2>📝 Test blanc - Portrait</h2>
+            <p>Entraîne-toi comme pour l’évaluation finale. Commence par tirer une consigne aléatoire, puis écris ton portrait.</p>
+
+            <div style="margin-bottom:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+                <button class="btn btn-primary" onclick="genererConsigneTestBlanc()">🎲 Générer une consigne</button>
+                <span id="consigneTestBlanc" style="font-size:0.9rem;color:#e5e7eb;"></span>
+            </div>
+
+            <textarea id="testBlancInput" class="generator-input" placeholder="Test blanc : écris ici ton portrait complet..."></textarea>
+            <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+                <button class="btn btn-primary" onclick="analyserTestBlanc()">Analyser mon test blanc</button>
+            </div>
+            <div id="testBlancFeedback" class="generator-output" style="display:none;"></div>
+
+            <h3>📊 Grille critériée simplifiée</h3>
+            <ul>
+                <li><strong>Lexique</strong> : adjectifs variés, vocabulaire précis.</li>
+                <li><strong>Conjugaison</strong> : imparfait correct, quelques verbes au présent ou au passé composé.</li>
+                <li><strong>Grammaire / accords</strong> : accords sujet-verbe, accords dans le groupe nominal.</li>
+                <li><strong>Orthographe</strong> : mots courants maîtrisés, relecture visible.</li>
+                <li><strong>Organisation du texte</strong> : séparation en paragraphes logiques (introduction, description, conclusion).</li>
+                <li><strong>Lisibilité</strong> : phrases complètes et ponctuation claire.</li>
+            </ul>
+        </div>
+    `;
+}
+
+function generatePortrait() {
+    const text = document.getElementById('portraitInput').value.trim();
+    const output = document.getElementById('portraitOutput');
+    if (!output) return;
+    if (!text) {
+        output.style.display = 'block';
+        output.textContent = "Commence par écrire un portrait dans la zone ci-dessus.";
+        return;
+    }
+
+    let feedback = "Analyse rapide de ton portrait :\n\n";
+    const lower = text.toLowerCase();
+
+    const phys = ["grand", "petit", "cheveux", "yeux", "mince", "fort", "musclé", "ridée", "barbe"];
+    const moral = ["gentil", "méchant", "sérieux", "joyeux", "timide", "courageux", "généreux", "égoïste", "drôle"];
+    const imparfait = ["était", "avait", "portait", "aimait", "disait", "faisait", "vivait", "ressemblait"];
+
+    const hasPhys = phys.some(w => lower.includes(w));
+    const hasMoral = moral.some(w => lower.includes(w));
+    const hasImparfait = imparfait.some(w => lower.includes(w));
+
+    if (hasPhys) feedback += "✅ Tu utilises du vocabulaire pour le physique.\n";
+    else feedback += "⚠️ Tu pourrais ajouter plus de vocabulaire pour décrire le physique.\n";
+
+    if (hasMoral) feedback += "✅ Tu décris aussi le caractère (moral).\n";
+    else feedback += "⚠️ Tu pourrais ajouter des adjectifs pour le caractère (gentil, sérieux, timide...).\n";
+
+    if (hasImparfait) feedback += "✅ Tu utilises l'imparfait, c'est bien pour la description.\n";
+    else feedback += "⚠️ Essaie d'utiliser l'imparfait (était, avait, portait...) pour décrire.\n";
+
+    const sentences = text.split(/[.!?]/).filter(s => s.trim().length > 0);
+    if (sentences.length < 5) {
+        feedback += "⚠️ Ton portrait est un peu court. Essaie d'écrire au moins 5 phrases.\n";
+    } else {
+        feedback += "✅ Tu as un nombre de phrases suffisant.\n";
+    }
+
+    output.style.display = 'block';
+    output.textContent = feedback;
+}
+
+function correctPortrait() {
+    const text = document.getElementById('portraitInput').value.trim();
+    const output = document.getElementById('portraitOutput');
+    if (!output) return;
+    if (!text) {
+        output.style.display = 'block';
+        output.textContent = "Écris d'abord un portrait, puis je te donnerai des pistes de correction.";
+        return;
+    }
+
+    let suggestions = "Pistes de correction :\n\n";
+    suggestions += "- Vérifie que chaque phrase commence par une majuscule et finit par un point.\n";
+    suggestions += "- Revois l'accord sujet/verbe à l'imparfait (il/elle était, ils/elles étaient...).\n";
+    suggestions += "- Ajoute des connecteurs pour organiser ton texte (d'abord, ensuite, enfin...).\n";
+    suggestions += "- Vérifie l'orthographe des adjectifs (accords en genre et en nombre).\n";
+
+    output.style.display = 'block';
+    output.textContent = suggestions;
+}
+
+
+// DEBUT BLOC 3 – CONSIGNES ALEATOIRES + ANALYSE TEST BLANC
+
+const CONSIGNES_TEST_BLANC = [
+    "Décris un camarade de classe (physique et caractère) sans donner son nom.",
+    "Écris le portrait d'un professeur réel ou imaginaire. Insiste sur ses habitudes en classe et son caractère.",
+    "Décris un membre de ta famille que tu admires. Explique pourquoi tu l'apprécies.",
+    "Imagine le portrait d'un héros ou d'une héroïne de série, de film ou de jeu vidéo que tu aimes.",
+    "Écris ton propre portrait : comment tu es aujourd'hui et comment tu étais quand tu étais plus jeune.",
+    "Imagine le portrait d'un inconnu croisé dans le train ou dans la rue. Invente son caractère et son histoire."
+];
+
+function genererConsigneTestBlanc() {
+    const span = document.getElementById('consigneTestBlanc');
+    if (!span) return;
+    const index = Math.floor(Math.random() * CONSIGNES_TEST_BLANC.length);
+    span.textContent = CONSIGNES_TEST_BLANC[index];
+}
+
+function analyserTestBlanc() {
+    const input = document.getElementById('testBlancInput');
+    const feedback = document.getElementById('testBlancFeedback');
+    if (!input || !feedback) return;
+
+    const text = input.value.trim();
+    feedback.style.display = 'block';
+
+    if (!text) {
+        feedback.textContent = "Commence par écrire un texte pour le test blanc avant de demander une analyse.";
+        return;
+    }
+
+    const lower = text.toLowerCase();
+    const mots = lower.split(/\s+/).filter(m => m.length > 0);
+    const longueur = mots.length;
+
+    const imparfaitRegex = /\b(étais|étais|était|étions|étiez|étaient|avais|avait|avions|avaient|regardait|marchait|parlait|portait|aimait)\b/g;
+    const nbImparfait = (lower.match(imparfaitRegex) || []).length;
+    const pcRegex = /\b(a été|a eu|a regardé|a marché|a parlé|a porté|a aimé|est allé|est venue?|ont été|ont eu)\b/g;
+    const nbPC = (lower.match(pcRegex) || []).length;
+
+    const adjectifsPortrait = ["grand", "petit", "souriant", "timide", "joyeux", "sérieux", "sportif", "gentil", "méchant", "organisé", "créatif"];
+    let nbAdjectifs = 0;
+    adjectifsPortrait.forEach(adj => {
+        if (lower.includes(adj)) nbAdjectifs++;
+    });
+
+    let paragraphes = text.split(/\n\s*\n/).filter(p => p.trim().length > 0);
+    const nbParagraphes = paragraphes.length;
+
+    let message = "Analyse de ton test blanc :\n\n";
+
+    message += `• Longueur : environ ${longueur} mots. `;
+    if (longueur < 80) {
+        message += "Ton texte est assez court, essaie d'ajouter quelques phrases de description.\n";
+    } else if (longueur > 220) {
+        message += "Ton texte est long : pense à bien structurer et à éviter les répétitions.\n";
+    } else {
+        message += "La longueur est correcte pour un portrait de 10H.\n";
+    }
+
+    message += `\n• Imparfait : ${nbImparfait} forme(s) repérée(s). `;
+    if (nbImparfait === 0) {
+        message += "Essaie d'utiliser davantage l'imparfait pour décrire (ex : il était..., elle portait...).\n";
+    } else {
+        message += "Tu utilises déjà l'imparfait, vérifie les terminaisons et la cohérence.\n";
+    }
+
+    message += `\n• Passé composé : ${nbPC} forme(s) repérée(s). `;
+    message += "Le passé composé peut servir à raconter une ou deux actions, mais reste concentré sur la description.\n";
+
+    message += `\n• Lexique du portrait : ${nbAdjectifs} adjectif(s) typiques repéré(s). `;
+    if (nbAdjectifs < 3) {
+        message += "Ajoute des adjectifs pour le physique et le caractère afin de rendre ton portrait plus précis.\n";
+    } else {
+        message += "Ton texte contient déjà plusieurs adjectifs intéressants, bravo.\n";
+    }
+
+    message += `\n• Organisation du texte : ${nbParagraphes} paragraphe(s) repéré(s).\n`;
+    if (nbParagraphes < 2) {
+        message += "Essaie de séparer ton texte en au moins deux ou trois paragraphes logiques (introduction, description, conclusion).\n";
+    } else {
+        message += "Ton texte est déjà découpé en paragraphes, vérifie que chaque paragraphe a une idée principale claire.\n";
+    }
+
+    message += "\nPense à relire ton texte pour corriger l'orthographe et vérifier les accords (genre, nombre et temps).";
+
+    feedback.textContent = message;
+}
+
+// FIN BLOC 3 – CONSIGNES ALEATOIRES + ANALYSE TEST BLANC
+
+
+/* QUI EST-CE ? – version que tu veux garder (supposée déjà ok dans ton fichier amélioré) */
+function getCharacters() {
+    return [
+        { 
+            name: 'Personnage A',
+            image: 'img/qui1.png',
+            description: 'Il avait des cheveux blonds et une petite frange qui tombait sur le front. Il portait une capuche verte, une tunique verte et une ceinture marron. Son regard était très sérieux, comme s’il se préparait pour un combat. Il tenait toujours un grand bouclier bleu et une épée brillante dans la main.'
+        },
+        {
+            name: 'Personnage B',
+            image: 'img/qui2.png',
+            description: 'Il avait l’apparence d’un chien debout, avec un museau pointu et de grandes oreilles. Il portait une combinaison jaune avec un sweat à capuche et un sac à dos noir. Il avait de grosses lunettes de soleil brillantes qui cachaient ses yeux. Il avait l’air sûr de lui, un peu cool, comme une star en tenue de rue.'
+        },
+        {
+            name: 'Personnage C',
+            image: 'img/qui3.png',
+            description: 'Elle était grande et élancée, avec une longue robe orange très élégante. Ses cheveux étaient très volumineux et attachés en grosses boucles. Elle portait des bijoux dorés autour du cou et des boucles d’oreilles. Elle avait une allure calme et fière, comme une héroïne dans un dessin animé.'
+        }
+    ];
+}
+
+function renderQuiEstCeTab() {
+    if (!appState.game.characters || appState.game.characters.length === 0) {
+        appState.game.characters = getCharacters();
+        appState.game.target = appState.game.characters[Math.floor(Math.random() * appState.game.characters.length)];
+        appState.game.selected = null;
+        appState.game.attempts = 0;
+        appState.game.over = false;
+    }
+
+    const cardsHtml = appState.game.characters.map((ch, idx) => `
+        <div class="character-card ${appState.game.selected === idx ? 'selected' : ''}" onclick="selectCharacter(${idx})">
+            <img src="${ch.image}" alt="${ch.name}" onerror="this.style.display='none'" />
+            <div><strong>${ch.name}</strong></div>
+        </div>
+    `).join('');
+
+    return `
+        <div class="card">
+            <h2>🎭 Jeu "Qui est-ce ?"</h2>
+            <p>Un personnage secret est choisi. Tu dois deviner qui c'est grâce à la description.</p>
+            <div class="notice">
+                Description du personnage secret :<br/>
+                <strong id="secretDescription">${appState.game.target.description}</strong>
+            </div>
+            <div class="characters-grid" id="charactersGrid">
+                ${cardsHtml}
+            </div>
+            <div style="margin-top:10px;display:flex;gap:8px;">
+                <button class="btn btn-primary" onclick="startGame()">Nouvelle partie</button>
+                <button class="btn btn-outline" onclick="resetGame()">Réinitialiser</button>
+            </div>
+            <div id="gameFeedback" class="notice" style="margin-top:8px;">
+                Clique sur un personnage pour proposer une réponse.
+            </div>
+        </div>
+    `;
+}
+
+function selectCharacter(index) {
+    if (!appState.game || !appState.game.characters || appState.game.characters.length === 0) return;
+    if (appState.game.over) return;
+    appState.game.selected = index;
+    appState.game.attempts = (appState.game.attempts || 0) + 1;
+
+    const selected = appState.game.characters[index];
+    const isCorrect = selected.name === appState.game.target.name;
+    const feedback = document.getElementById('gameFeedback');
+
+    if (!feedback) return;
+
+    if (isCorrect) {
+        appState.game.over = true;
+        feedback.className = 'notice success';
+        feedback.textContent = `✅ Bravo, c'était bien ${selected.name} ! Tu as trouvé en ${appState.game.attempts} tentative(s).`;
+    } else {
+        feedback.className = 'notice danger';
+        feedback.textContent = `❌ Ce n'est pas ${selected.name}. Essaie encore !`;
+    }
+}
+
+function startGame() {
+    appState.game.characters = getCharacters();
+    appState.game.target = appState.game.characters[Math.floor(Math.random() * appState.game.characters.length)];
+    appState.game.selected = null;
+    appState.game.attempts = 0;
+    appState.game.over = false;
+    openTab('qui-est-ce');
+}
+
+function resetGame() {
+    appState.game = {
+        characters: getCharacters(),
+        target: null,
+        selected: null,
+        attempts: 0,
+        over: false
+    };
+    openTab('qui-est-ce');
+}
+
+/* RESSOURCES PROF – fiches 3 et 6 ajoutées */
+function renderRessourcesProf() {
+    return `
+        <div class="card">
+            <h2>📚 Ressources & Fiches Pédagogiques</h2>
+            <ul>
+                <li><a href="docs/fiche1-physique-moral.pdf" target="_blank">📥 Fiche 1 : Classer Physique / Moral</a></li>
+                <li><a href="docs/fiche2-imparfait.pdf" target="_blank">📥 Fiche 2 : L'Imparfait</a></li>
+                <li><a href="docs/fiche3-phrase-complete.pdf" target="_blank">📥 Fiche 3 : Phrase complète</a></li>
+                <li><a href="docs/fiche4-imparfait-pc.pdf" target="_blank">📥 Fiche 4 : Imparfait vs Passé Composé</a></li>
+                <li><a href="docs/fiche5-lexique.pdf" target="_blank">📥 Fiche 5 : Lexique du Portrait</a></li>
+                <li><a href="docs/fiche6-techniques.pdf" target="_blank">📥 Fiche 6 Techniques de portrait</a></li>
+		<li><a href="docs/fiche7-grille-portrait.pdf" target="_blank">📥 Fiche 7 Grille critériée</a></li>
+<li><a href="docs/fiche8-lecture-portraits.pdf" target="_blank">📥 Fiche 8 Portraits : extraits de romans</a></li>
+            </ul>
+        </div>
+    `;
+}
+
+/* VOCABULAIRE – catégories + mini-jeu */
+function getVocabulary() {
+    return {
+        '👤 Description physique': [
+            { word: 'grand', type: 'Adjectif' },
+            { word: 'petit', type: 'Adjectif' },
+            { word: 'mince', type: 'Adjectif' },
+            { word: 'rond', type: 'Adjectif' },
+            { word: 'musclé', type: 'Adjectif' },
+            { word: 'cheveux longs', type: 'GN' },
+            { word: 'cheveux courts', type: 'GN' },
+            { word: 'cheveux bouclés', type: 'GN' },
+            { word: 'cheveux raides', type: 'GN' },
+            { word: 'yeux bleus', type: 'GN' },
+            { word: 'yeux verts', type: 'GN' },
+            { word: 'yeux marron', type: 'GN' },
+            { word: 'visage rond', type: 'GN' },
+            { word: 'visage fin', type: 'GN' }
+        ],
+        '💭 Description morale': [
+            { word: 'gentil', type: 'Adjectif' },
+            { word: 'méchant', type: 'Adjectif' },
+            { word: 'timide', type: 'Adjectif' },
+            { word: 'sociable', type: 'Adjectif' },
+            { word: 'joyeux', type: 'Adjectif' },
+            { word: 'triste', type: 'Adjectif' },
+            { word: 'travailleur', type: 'Adjectif' },
+            { word: 'paresseux', type: 'Adjectif' },
+            { word: 'courageux', type: 'Adjectif' },
+            { word: 'jaloux', type: 'Adjectif' },
+            { word: 'bavard', type: 'Adjectif' },
+            { word: 'réservé', type: 'Adjectif' },
+            { word: 'sensible', type: 'Adjectif' },
+            { word: 'rêveur', type: 'Adjectif' }
+        ],
+        '⏳ Imparfait utile': [
+            { word: 'il était', type: 'Verbe' },
+            { word: 'elle était', type: 'Verbe' },
+            { word: 'il avait', type: 'Verbe' },
+            { word: 'elle avait', type: 'Verbe' },
+            { word: 'il portait', type: 'Verbe' },
+            { word: 'elle portait', type: 'Verbe' },
+            { word: 'il aimait', type: 'Verbe' },
+            { word: 'elle aimait', type: 'Verbe' },
+            { word: 'il ressemblait à', type: 'Verbe' }
+        ],
+        '👕 Vêtements & accessoires': [
+            { word: 'sweat à capuche', type: 'Vêtement' },
+            { word: 'jeans', type: 'Vêtement' },
+            { word: 'veste', type: 'Vêtement' },
+            { word: 'robe longue', type: 'Vêtement' },
+            { word: 'chemise', type: 'Vêtement' },
+            { word: 'pull', type: 'Vêtement' },
+            { word: 'baskets', type: 'Chaussures' },
+            { word: 'bottes', type: 'Chaussures' },
+            { word: 'lunettes', type: 'Accessoire' },
+            { word: 'chapeau', type: 'Accessoire' },
+            { word: 'bijoux', type: 'Accessoire' },
+            { word: 'sac à dos', type: 'Accessoire' }
+        ],
+        '🎭 Expressions utiles': [
+            { word: 'il avait l’air sûr de lui', type: 'Expression' },
+            { word: 'elle semblait timide', type: 'Expression' },
+            { word: 'il paraissait fatigué', type: 'Expression' },
+            { word: 'elle donnait l’impression d’être heureuse', type: 'Expression' }
+        ]
+    };
+}
+
+function filterVocab(category) {
+    const vocab = getVocabulary();
+    const items = vocab[category] || [];
+    const list = document.getElementById('vocabList');
+    if (!list) return;
+
+    list.innerHTML = items
+        .map(item => `
+            <div class="vocab-item">
+                <span>${item.word}</span>
+                <span class="type">${item.type}</span>
+            </div>
+        `)
+        .join('');
+
+    document.querySelectorAll('.vocab-filter').forEach(btn => btn.classList.remove('active'));
+    const buttons = Array.from(document.querySelectorAll('.vocab-filter'));
+    const target = buttons.find(b => b.textContent.trim() === category);
+    if (target) target.classList.add('active');
+}
+
+/* Mini-jeu vocabulaire */
+function getVocabGameData() {
+    return [
+        { base: 'joyeux', type: 'synonyme', answer: 'heureux' },
+        { base: 'timide', type: 'antonyme', answer: 'sociable' },
+        { base: 'travailleur', type: 'antonyme', answer: 'paresseux' },
+        { base: 'gentil', type: 'antonyme', answer: 'méchant' },
+        { base: 'courageux', type: 'antonyme', answer: 'peureux' }
+    ];
+}
+
+let vocabGameIndex = 0;
+
+function currentVocabGameItem() {
+    const data = getVocabGameData();
+    return data[vocabGameIndex % data.length];
+}
+
+function updateVocabGameQuestion() {
+    const q = currentVocabGameItem();
+    const el = document.getElementById('vocabGameQuestion');
+    if (!el) return;
+    el.innerHTML = `Pour le mot <strong>${q.base}</strong>, trouve un <strong>${q.type}</strong>.`;
+    const fb = document.getElementById('vocabGameFeedback');
+    if (fb) { fb.style.display = 'none'; fb.textContent = ''; }
+    const inp = document.getElementById('vocabGameInput');
+    if (inp) inp.value = '';
+}
+
+function checkVocabGame() {
+    const q = currentVocabGameItem();
+    const inp = document.getElementById('vocabGameInput');
+    const fb = document.getElementById('vocabGameFeedback');
+    if (!inp || !fb) return;
+    const ans = inp.value.trim().toLowerCase();
+    if (!ans) { fb.style.display = 'block'; fb.textContent = "Écris d'abord une réponse."; return; }
+    if (ans === q.answer.toLowerCase()) {
+        fb.style.display = 'block';
+        fb.textContent = "✅ Bravo, c'est une bonne réponse !";
+    } else {
+        fb.style.display = 'block';
+        fb.textContent = `❌ Réponse attendue possible : ${q.answer}.`;
+    }
+}
+
+function nextVocabGame() {
+    vocabGameIndex++;
+    updateVocabGameQuestion();
+}
+
+/* DEBUT BLOC 4 – ONGLET VOCABULAIRE */
+function renderVocabulaireTab() {
+    const categories = [
+        { id: 'physique', label: 'Description physique' },
+        { id: 'moral', label: 'Description morale' },
+        { id: 'temps', label: 'Imparfait et passé composé' },
+        { id: 'vetements', label: 'Vêtements & accessoires' },
+        { id: 'expressions', label: 'Expressions utiles' }
+    ];
+
+    const vocab = {
+        physique: [
+            { mot: "grand / grande", type: "taille" },
+            { mot: "petit / petite", type: "taille" },
+            { mot: "mince", type: "corps" },
+            { mot: "fort / forte", type: "corps" },
+            { mot: "musclé / musclée", type: "corps" },
+            { mot: "les cheveux bouclés", type: "cheveux" },
+            { mot: "les cheveux lisses", type: "cheveux" },
+            { mot: "les cheveux courts", type: "cheveux" },
+            { mot: "les cheveux longs", type: "cheveux" },
+            { mot: "les yeux marron / verts / bleus", type: "yeux" },
+            { mot: "un visage rond / allongé", type: "visage" },
+            { mot: "un sourire discret / large", type: "visage" }
+        ],
+        moral: [
+            { mot: "gentil / gentille", type: "caractère positif" },
+            { mot: "généreux / généreuse", type: "caractère positif" },
+            { mot: "joyeux / joyeuse", type: "caractère positif" },
+            { mot: "sérieux / sérieuse", type: "travail" },
+            { mot: "timide", type: "relation aux autres" },
+            { mot: "bavard / bavarde", type: "relation aux autres" },
+            { mot: "organisé / organisée", type: "travail" },
+            { mot: "rêveur / rêveuse", type: "caractère" },
+            { mot: "autoritaire", type: "caractère" },
+            { mot: "impatient / impatiente", type: "caractère" },
+            { mot: "turbulent / turbulente", type: "classe" },
+            { mot: "calme", type: "classe" }
+        ],
+        temps: [
+            { mot: "être : j’étais, il/elle était", type: "imparfait (description)" },
+            { mot: "avoir : j’avais, il/elle avait", type: "imparfait (description)" },
+            { mot: "paraître : il/elle paraissait", type: "imparfait (impression)" },
+            { mot: "ressembler : il/elle ressemblait à...", type: "imparfait (comparaison)" },
+            { mot: "porter : il/elle portait", type: "imparfait (habitude)" },
+            { mot: "regarder : il/elle regardait", type: "imparfait (attitude)" },
+            { mot: "marcher : il/elle marchait", type: "imparfait (mouvement)" },
+            { mot: "être : il/elle a été", type: "passé composé (action courte)" },
+            { mot: "avoir : il/elle a eu", type: "passé composé (événement)" },
+            { mot: "porter : il/elle a porté", type: "passé composé (action ponctuelle)" },
+            { mot: "regarder : il/elle a regardé", type: "passé composé (action ponctuelle)" },
+            { mot: "marcher : il/elle a marché", type: "passé composé (action ponctuelle)" }
+        ],
+        vetements: [
+            { mot: "un t-shirt", type: "haut" },
+            { mot: "un pull", type: "haut" },
+            { mot: "un pantalon", type: "bas" },
+            { mot: "un jean", type: "bas" },
+            { mot: "des baskets", type: "chaussures" },
+            { mot: "des chaussures de ville", type: "chaussures" },
+            { mot: "une casquette", type: "accessoire" },
+            { mot: "un bonnet", type: "accessoire" },
+            { mot: "un sac à dos", type: "accessoire" },
+            { mot: "une veste", type: "veste" }
+        ],
+        expressions: [
+            { mot: "Il / Elle a l’air...", type: "impression" },
+            { mot: "On voit tout de suite que...", type: "impression" },
+            { mot: "Il / Elle semble...", type: "impression" },
+            { mot: "Il / Elle donne l’impression d’être...", type: "impression" },
+            { mot: "Quand il / elle était petit(e), ...", type: "souvenir" },
+            { mot: "Aujourd’hui, il / elle est plutôt...", type: "évolution" },
+            { mot: "Ce que j’aime chez lui / elle, c’est...", type: "appréciation" },
+            { mot: "Ce qui le / la rend unique, c’est...", type: "appréciation" }
+        ]
+    };
+
+    // Catégorie par défaut : physique
+    const activeCat = 'physique';
+    const items = vocab[activeCat];
+
+    let filtersHtml = '';
+    categories.forEach(cat => {
+        filtersHtml += `
+            <button class="vocab-filter ${cat.id === activeCat ? 'active' : ''}" onclick="changeVocabCategory('${cat.id}')">
+                ${cat.label}
+            </button>
+        `;
+    });
+
+    let listHtml = '';
+    items.forEach(entry => {
+        listHtml += `
+            <div class="vocab-item">
+                <span>${entry.mot}</span>
+                <span class="type">${entry.type}</span>
+            </div>
+        `;
+    });
+
+    return `
+        <div class="card">
+            <h2>💬 Vocabulaire du portrait</h2>
+            <p>Choisis une catégorie pour revoir les mots utiles, puis utilise-les dans tes phrases et tes textes.</p>
+            <div class="vocab-filters">
+                ${filtersHtml}
+            </div>
+            <div id="vocabList" class="vocab-list">
+                ${listHtml}
+            </div>
+        </div>
+        <div class="card">
+            <h3>🎮 Mini-jeu : synonymes, contraires, famille de mots</h3>
+            <p>Réponds aux questions : trouve un synonyme, un contraire ou un mot de la même famille.</p>
+            <div id="vocabGameQuestion" style="margin-bottom:6px;font-size:0.9rem;"></div>
+            <input id="vocabGameAnswer" type="text" class="generator-input" style="min-height:0;height:auto;padding:6px 8px;" placeholder="Ta réponse ici...">
+            <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;">
+                <button class="btn btn-primary" onclick="checkVocabGame()">Valider</button>
+                <button class="btn btn-outline" onclick="nextVocabGame()">Nouvelle question</button>
+            </div>
+            <div id="vocabGameFeedback" class="generator-output" style="display:none;"></div>
+        </div>
+    `;
+}
+
+// DEBUT BLOC 4 – LOGIQUE VOCABULAIRE
+
+let currentVocabCategory = 'physique';
+
+function changeVocabCategory(catId) {
+    currentVocabCategory = catId;
+
+    const categories = {
+        physique: [
+            { mot: "grand / grande", type: "taille" },
+            { mot: "petit / petite", type: "taille" },
+            { mot: "mince", type: "corps" },
+            { mot: "fort / forte", type: "corps" },
+            { mot: "musclé / musclée", type: "corps" },
+            { mot: "les cheveux bouclés", type: "cheveux" },
+            { mot: "les cheveux lisses", type: "cheveux" },
+            { mot: "les cheveux courts", type: "cheveux" },
+            { mot: "les cheveux longs", type: "cheveux" },
+            { mot: "les yeux marron / verts / bleus", type: "yeux" },
+            { mot: "un visage rond / allongé", type: "visage" },
+            { mot: "un sourire discret / large", type: "visage" }
+        ],
+        moral: [
+            { mot: "gentil / gentille", type: "caractère positif" },
+            { mot: "généreux / généreuse", type: "caractère positif" },
+            { mot: "joyeux / joyeuse", type: "caractère positif" },
+            { mot: "sérieux / sérieuse", type: "travail" },
+            { mot: "timide", type: "relation aux autres" },
+            { mot: "bavard / bavarde", type: "relation aux autres" },
+            { mot: "organisé / organisée", type: "travail" },
+            { mot: "rêveur / rêveuse", type: "caractère" },
+            { mot: "autoritaire", type: "caractère" },
+            { mot: "impatient / impatiente", type: "caractère" },
+            { mot: "turbulent / turbulente", type: "classe" },
+            { mot: "calme", type: "classe" }
+        ],
+        temps: [
+            { mot: "j’étais, il/elle était", type: "être à l’imparfait" },
+            { mot: "j’avais, il/elle avait", type: "avoir à l’imparfait" },
+            { mot: "il/elle paraissait", type: "paraître à l’imparfait" },
+            { mot: "il/elle ressemblait à...", type: "ressembler à l’imparfait" },
+            { mot: "il/elle portait", type: "porter à l’imparfait" },
+            { mot: "il/elle regardait", type: "regarder à l’imparfait" },
+            { mot: "il/elle marchait", type: "marcher à l’imparfait" },
+            { mot: "il/elle a été", type: "être au passé composé" },
+            { mot: "il/elle a eu", type: "avoir au passé composé" },
+            { mot: "il/elle a porté", type: "porter au passé composé" },
+            { mot: "il/elle a regardé", type: "regarder au passé composé" },
+            { mot: "il/elle a marché", type: "marcher au passé composé" }
+        ],
+        vetements: [
+            { mot: "un t-shirt", type: "haut" },
+            { mot: "un pull", type: "haut" },
+            { mot: "un pantalon", type: "bas" },
+            { mot: "un jean", type: "bas" },
+            { mot: "des baskets", type: "chaussures" },
+            { mot: "des chaussures de ville", type: "chaussures" },
+            { mot: "une casquette", type: "accessoire" },
+            { mot: "un bonnet", type: "accessoire" },
+            { mot: "un sac à dos", type: "accessoire" },
+            { mot: "une veste", type: "veste" }
+        ],
+        expressions: [
+            { mot: "Il / Elle a l’air...", type: "impression" },
+            { mot: "On voit tout de suite que...", type: "impression" },
+            { mot: "Il / Elle semble...", type: "impression" },
+            { mot: "Il / Elle donne l’impression d’être...", type: "impression" },
+            { mot: "Quand il / elle était petit(e), ...", type: "souvenir" },
+            { mot: "Aujourd’hui, il / elle est plutôt...", type: "évolution" },
+            { mot: "Ce que j’aime chez lui / elle, c’est...", type: "appréciation" },
+            { mot: "Ce qui le / la rend unique, c’est...", type: "appréciation" }
+        ]
+    };
+
+    const items = categories[catId] || [];
+    const list = document.getElementById('vocabList');
+    if (!list) return;
+
+    list.innerHTML = items.map(entry => `
+        <div class="vocab-item">
+            <span>${entry.mot}</span>
+            <span class="type">${entry.type}</span>
+        </div>
+    `).join('');
+
+    // Mettre à jour l'état visuel des boutons
+    const filters = document.querySelectorAll('.vocab-filter');
+    filters.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent.includes('Description physique') && catId === 'physique') btn.classList.add('active');
+        if (btn.textContent.includes('Description morale') && catId === 'moral') btn.classList.add('active');
+        if (btn.textContent.includes('Imparfait') && catId === 'temps') btn.classList.add('active');
+        if (btn.textContent.includes('Vêtements') && catId === 'vetements') btn.classList.add('active');
+        if (btn.textContent.includes('Expressions') && catId === 'expressions') btn.classList.add('active');
+    });
+}
+
+// Mini-jeu vocabulaire
+const VOCAB_GAME_ITEMS = [
+    { question: "Trouve un synonyme de « gentil ».", reponses: ["aimable","sympa","sympathique"] },
+    { question: "Trouve un contraire de « timide ».", reponses: ["sociable","à l’aise","bavard","bavarde"] },
+    { question: "Donne un adjectif de la même famille que « sport ».", reponses: ["sportif","sportive"] },
+    { question: "Trouve un contraire de « désordonné ».", reponses: ["ordonné","organisé","organisée"] },
+    { question: "Donne un synonyme de « joyeux ».", reponses: ["content","heureux","heureuse"] },
+    { question: "Donne un contraire de « paresseux ».", reponses: ["travailleur","travailleuse"] }
+];
+
+let currentVocabGameIndex = 0;
+
+function afficherVocabGameQuestion() {
+    const qDiv = document.getElementById('vocabGameQuestion');
+    const input = document.getElementById('vocabGameAnswer');
+    const feedback = document.getElementById('vocabGameFeedback');
+    if (!qDiv || !input || !feedback) return;
+
+    const item = VOCAB_GAME_ITEMS[currentVocabGameIndex];
+    qDiv.textContent = item.question;
+    input.value = "";
+    feedback.style.display = "none";
+    feedback.textContent = "";
+}
+
+function checkVocabGame() {
+    const input = document.getElementById('vocabGameAnswer');
+    const feedback = document.getElementById('vocabGameFeedback');
+    if (!input || !feedback) return;
+
+    const reponse = input.value.trim().toLowerCase();
+    if (!reponse) {
+        feedback.style.display = "block";
+        feedback.textContent = "Écris d’abord une réponse avant de valider.";
+        return;
+    }
+
+    const item = VOCAB_GAME_ITEMS[currentVocabGameIndex];
+    const bonnes = item.reponses.map(r => r.toLowerCase());
+    const correct = bonnes.includes(reponse);
+
+    feedback.style.display = "block";
+    if (correct) {
+        feedback.textContent = "✅ Bonne réponse, bravo !";
+    } else {
+        feedback.textContent = "❌ Ce n’est pas une des réponses attendues. Exemples possibles : " + item.reponses.join(", ") + ".";
+    }
+}
+
+function nextVocabGame() {
+    currentVocabGameIndex = (currentVocabGameIndex + 1) % VOCAB_GAME_ITEMS.length;
+    afficherVocabGameQuestion();
+}
+
+// Appeler une fois au chargement de l’onglet
+setTimeout(() => {
+    if (appState.currentTab === 'vocabulaire') {
+        afficherVocabGameQuestion();
+    }
+}, 300);
+
+// FIN BLOC 4 – LOGIQUE VOCABULAIRE
+
+
+/* PORTRAITS – boutons sessions */
+function togglePortrait(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
+}
+
+/* INIT ENTER */
+document.addEventListener('DOMContentLoaded', function () {
+    const input = document.getElementById('codeInput');
+    if (!input) return;
+
+    input.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            const code = this.value;
+            if (code === 'prof2026') {
+                loginAsProf();
+            } else if (code === 'vaud2026') {
+                loginAsStudent();
+            } else {
+                alert('❌ Code incorrect');
+            }
+        }
+    });
+});
+
+/* LOGOUT */
+function logout() {
+    appState.user = null;
+    appState.currentTab = null;
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('appContainer').classList.remove('active');
+    const input = document.getElementById('codeInput');
+    if (input) { input.value = ''; input.focus(); }
+}
+</script>
+</body>
+</html>
